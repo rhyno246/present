@@ -1,4 +1,4 @@
-export default function Header () {
+export default function Header ({menu}) {
     return (
       <header className="header-area">
       {/* Navbar Area */}
@@ -31,10 +31,15 @@ export default function Header () {
                 {/* Nav Start */}
                 <div className="classynav">
                   <ul>
-                    <li>
-                      <a href="#">International</a>
-                    </li>
-                    <li>
+                    {
+                      menu.data.map(item => (
+                      <li key={item.id}>
+                        <a href="#">{ item.name }</a>
+                      </li>
+                      ))
+                    }
+                    
+                    {/* <li>
                       <a href="#">Local News</a>
                     </li>
                     <li>
@@ -85,7 +90,7 @@ export default function Header () {
                     </li>
                     <li>
                       <a href="#">Lifestyle</a>
-                    </li>
+                    </li> */}
                   </ul>
 
                 </div>

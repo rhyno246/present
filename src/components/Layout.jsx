@@ -1,9 +1,18 @@
 import Head from "next/head";
-import Footer from "./Footer";
-import Header from "./Header";
+import Footer from "./footer";
+import Header from "./header";
+import useSWR from "swr";
 import { Inter } from "next/font/google";
+import axios from "axios";
 const inter = Inter({ subsets: ["latin"] });
+
+
+const fetcher = url => axios.get(url).then(res => res.data)
+
 export default function Layout ({ children }) {
+  const { data, error , isLoading } = useSWR('http://localhost:8000/api/v1/category' , fetcher);
+  if (error) return <div>failed to load</div>
+  if (isLoading) return <div>loading...</div>
     return (
         <>
         <Head>
@@ -12,7 +21,7 @@ export default function Layout ({ children }) {
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           <link rel="icon" href="/favicon.ico" />
         </Head>
-        <Header />
+        <Header menu={data}/>
           <main className={`${inter.className}`}>
             { children }
           </main>
