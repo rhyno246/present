@@ -8,3 +8,12 @@ export const getMenu = async () => {
         console.log(error)
     }
 }
+
+export const getNews = async () => {
+    try {
+        const response = await axios.get('https://jsonplaceholder.typicode.com/posts?_limit=10')
+        return response.data
+    } catch (error) {
+        console.log(error)
+    }
+}
