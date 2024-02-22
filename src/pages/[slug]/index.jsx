@@ -20,7 +20,7 @@ export default function Index () {
                     </div>
                     {/* Blog Content */}
                     <div className="blog-content">
-                        <span className="post-date">June 20, 2018</span>
+                        <span className="post-date">June 20, 2018 adssd</span>
                         <a href="#" className="post-title">
                         Traffic Problems in Time Square
                         </a>
