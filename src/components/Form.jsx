@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { signIn } from 'next-auth/react';
 export default function Form () {
     const [ isLogin , setIsLogin ] = useState(true);
     const [user , setUser]  =useState({
@@ -21,9 +22,12 @@ export default function Form () {
     const submit = async event => {
         event.preventDefault();
         if(isLogin){
-            console.log(1111)
+            signIn("credentials", {
+                email : user.email,
+                password : user.password
+            })
         }else{
-            const response = await fetch('/api/users/register', {
+            const response = await fetch('/api/auth/register', {
                 headers : {
                     'Content-Type': 'application/json',
                 },
