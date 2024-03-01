@@ -1,9 +1,10 @@
-export default function handler(req, res) {
-    if(req.method !== 'GET'){
-        return res.status(404).json({ name : 'method not supported' })
+import axios from 'axios'
+
+export const getHotPost = async () =>  {
+    try {
+        const response = await axios.get('http://localhost:8000/api/v1/news');
+        return response.data
+    } catch (error) {
+        console.log(error)
     }
-    res.status(200).json({ name: "get list of post" });
-  }
-  
-  
-  //proxy server -> http-proxy
+}

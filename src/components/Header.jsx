@@ -1,6 +1,8 @@
 import Link from "next/link";
+import { useSession , signOut } from "next-auth/react"
 
 export default function Header ({menu}) {
+  const { data: session } = useSession()
     return (
       <header className="header-area">
       <div className="newsbox-main-menu">
@@ -29,16 +31,28 @@ export default function Header ({menu}) {
                     {
                       menu.data.map(item => (
                       <li key={item.id}>
-                        <a href="#">{ item.name }</a>
+                        <Link href={item.slug}>{ item.name }</Link>
                       </li>
                       ))
                     }
                   </ul>
                     <div className="classynav">
                         <ul>
-                          <li>
-                          <Link href="/login">Login</Link>
-                          </li>
+                          {
+                            !session && <li>
+                            <Link href="/login">Login</Link>
+                            </li>
+                          }
+                          
+                          {
+                            session && <>
+                              <li className="mr-3">
+                                <i className="fa fa-user"/>
+                              </li>
+                              <button className="btn btn-danger" onClick={ () => signOut() }>Logout</button>
+                            </>
+                          }
+                          
                         </ul>
                     </div>
                 </div>

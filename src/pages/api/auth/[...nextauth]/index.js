@@ -6,8 +6,8 @@ import Credentials from 'next-auth/providers/credentials';
 const query = util.promisify(db.query).bind(db);
 
 export const authOptions = {
-    session : {
-        jwt : true
+    session: {
+        strategy: "jwt",
     },
     providers : [
         Credentials({
@@ -15,8 +15,9 @@ export const authOptions = {
                 if(!credentials.email || !credentials.password){
                     return null
                 }
-                const user = await query(`SELECT * FROM customers WHERE email = '${credentials.email}'`);
-                if (!user) {
+                let user = await query(`SELECT * FROM customers WHERE email = '${credentials.email}'`);
+                user = user[0];
+                if (!user || user.password !== credentials.password) {
                     throw new Error ('no user found !')
                 }
                 if(user.password){
@@ -24,6 +25,7 @@ export const authOptions = {
                 }
             }
         })
-    ]
+    ],
+    secret: 'secret'
 }
 export default NextAuth(authOptions);

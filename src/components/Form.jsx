@@ -22,10 +22,14 @@ export default function Form () {
     const submit = async event => {
         event.preventDefault();
         if(isLogin){
-            signIn("credentials", {
+            const result = await signIn("credentials", {
+                redirect : true,
                 email : user.email,
                 password : user.password
             })
+            if(!result?.error){
+                alert('login success')
+            }
         }else{
             const response = await fetch('/api/auth/register', {
                 headers : {
