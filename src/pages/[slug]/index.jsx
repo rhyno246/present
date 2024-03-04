@@ -1,9 +1,9 @@
-import Category from "@/components/Category";
+import Posts from "@/components/Posts";
 import HotPost from "@/components/HotPost";
-import { getHotPost } from "../api/posts";
+import { getAllPost, getHotPost } from "../api/posts";
 import { getMenu } from "../api/menu";
 
-export default function Index ({ posts, category }) {
+export default function Index ({ posts , all }) {
     const { data } = posts;
     return (
         <div className="hero-area">
@@ -15,8 +15,8 @@ export default function Index ({ posts, category }) {
                         <div className="col-12 col-lg-8">
                             <div className="row">
                                 {
-                                    category && category.map((item, index) => (
-                                        <Category key={index} />
+                                    all && all.map((item,index) => (
+                                        <Posts key={index} item={item}/>
                                     ))
                                 }
                                 
@@ -52,17 +52,19 @@ export default function Index ({ posts, category }) {
                     </div>
                 </div>
             </section>
-        </div>
+        </div> 
     );
 }
 
-export async function getServerSideProps (context) {
+export async function getServerSideProps () {
     const data = await getHotPost();
     const category = await getMenu();
+    const posts = await getAllPost();
     return {
         props : {
             posts : data,
-            category : category.data
+            category : category.data,
+            all : posts.data
         }
     }
 }
