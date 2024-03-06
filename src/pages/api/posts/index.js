@@ -9,15 +9,15 @@ export async function getHotPost  ()  {
     }
 }
 
-export async function getAllPostIds() {
-    const posts = await getAllPost();
+export async function getPrams() {
+    const posts = await getAllPost(["id"]);
     return posts.data.map(post => ({
-        params: { 
+        params : {
             id: `${post.id}`,
-            category : `${post.category}`
-        },
+            slug : `${post.category}`,
+        }
     }))
-  }
+}
 
 export async function  getAllPost ()  {
     try {
@@ -29,11 +29,23 @@ export async function  getAllPost ()  {
 }
 
 // 
-export async function getPostById  (id , category ) {
+export async function getPostById  (slug , id ) {
     try {
-        const response = await axios.get(`http://localhost:8000/api/v1/${category}/${ id }`)
+        const response = await axios.get(`http://localhost:8000/api/v1/news/${slug}/${id}`)
         return response.data
     } catch (error) {
         console.log(error)
     }
 }
+
+export async function getPostBySlug  (slug ) {
+    try {
+        const response = await axios.get(`http://localhost:8000/api/v1/news/${slug}`)
+        return response.data
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+

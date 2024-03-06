@@ -9,9 +9,9 @@ export default function Header ({menu}) {
         <div className="classy-nav-container breakpoint-off">
           <div className="container-fluid">
             <nav className="classy-navbar justify-content-between" id="newsboxNav">
-              <a href="index.html" className="nav-brand">
+              <Link href="/home">
                 <img src="/logo.svg" alt="" />
-              </a>
+              </Link>
               <div className="classy-navbar-toggler">
                 <span className="navbarToggler">
                   <span />
@@ -31,7 +31,7 @@ export default function Header ({menu}) {
                     {
                       menu.data.map(item => (
                       <li key={item.id}>
-                        <Link href={item.slug}>{ item.name }</Link>
+                        <Link href={`/${item.slug}`}>{ item.name }</Link>
                       </li>
                       ))
                     }

@@ -1,3 +1,4 @@
+import moment from "moment";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -19,10 +20,10 @@ export default function Posts ({ item }) {
                     </Link>
                 </div>
                 <div className="blog-content">
-                    <span className="post-date">{item.createdAt}</span>
-                    <a href="#" className="post-title">
+                    <span className="post-date">{moment(item.createdAt).format("DD-MM-YYYY")}</span>
+                    <Link href={`/${item.category}/${item.id}`} className="post-title">
                         { item.title }
-                    </a>
+                    </Link>
                 </div>
             </div>
         </div>
